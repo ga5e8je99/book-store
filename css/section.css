@@ -1,0 +1,59 @@
+body {
+  background: #eee;
+  
+}
+
+.ratings i {
+  color: green;
+}
+
+.install span {
+  font-size: 12px;
+}
+
+.col-md-4 {
+  margin-top: 27px;
+}
+.logo{
+  color: #AD9066;
+}
+.jumbotron{
+  background-image: url('../image/bannerstory.jpg');
+  height: 50vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+.shadow{
+  width: 100%;
+  content: '';
+  position: absolute;
+  top: 0;
+  background: rgba(0, 0, 0, 0.722);
+  height: 100%;
+}
+.jumbotron .container{
+  z-index: 99;
+  position: absolute; 
+  color: #eee;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.container-fluid{
+  justify-content: center !important;
+}
+.footer-links a {
+  color: #6c757d;
+  margin: 0 5px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+.fa-star{
+  color: #AD9066 !important;
+}
