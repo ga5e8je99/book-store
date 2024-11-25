@@ -18,6 +18,9 @@
               </nav>
         </div>
     </header>
+    <div class="alert alert-success" role="alert" id="aleart">
+        Your purchase was completed successfully
+            </div>
     <div class="container">
         <div class="row">
             <div class="col-12 mt-4">
@@ -59,43 +62,40 @@
                                         iste harum ipsum hic, nemo qui!</p>
                                 </div>
                                 <div class="col-lg-7">
-                                    <form id="paymentForm" class="form"  action="http://localhost:3000/api/payments"  method="post">
-
-
+                                    <form id="paymentForm" class="form" action="http://localhost:3000/api/payments" method="post">
                                         <div class="row">
-                                            <div class="col-12">
-                                                <div class="form__div">
-                                                    <input type="text" class="form-control" id="cardNumber" required>
-                                                    <label for="" class="form__label">Card Number</label>
-                                                </div>
+                                          <div class="col-12">
+                                            <div class="form__div">
+                                              <input type="text" class="form-control" id="cardNumber" required>
+                                              <label for="" class="form__label">Card Number</label>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="form__div">
-                                                    <input type="text" class="form-control" id="expiryDate" required placeholder="MM/YY" maxlength="5">
-                                                    <label for="expiryDate" class="form__label">MM / YY</label>
-                                                    <small id="error-msg" style="color: red; display: none;">Please refer to a month from 01 to 12 and a year from 25 to 30.</small>
-                                                </div>
+                                          </div>
+                                          <div class="col-6">
+                                            <div class="form__div">
+                                              <input type="text" class="form-control" id="expiryDate" required placeholder="MM/YY" maxlength="5">
+                                              <label for="expiryDate" class="form__label">MM / YY</label>
+                                              <small id="error-msg" style="color: red; display: none;">Please refer to a month from 01 to 12 and a year from 25 to 30.</small>
                                             </div>
-
-                                            <div class="col-6">
-                                                <div class="form__div">
-                                                    <input type="text" class="form-control" id="cvv" placeholder=" " required>
-                                                    <label for="" class="form__label" >cvv code</label>
-                                                </div>
+                                          </div>
+                                          <div class="col-6">
+                                            <div class="form__div">
+                                              <input type="text" class="form-control" id="cvv" placeholder=" " required>
+                                              <label for="" class="form__label">CVV Code</label>
                                             </div>
-                                            <div class="col-12">
-                                                <div class="form__div">
-                                                    <input type="text" class="form-control" placeholder=" " id="cardName">
-                                                    <label for="" class="form__label">name on the card</label>
-                                                </div>
+                                          </div>
+                                          <div class="col-12">
+                                            <div class="form__div">
+                                              <input type="text" class="form-control" placeholder=" " id="cardName">
+                                              <label for="" class="form__label">Name on the Card</label>
                                             </div>
-                                            <span class="fw-bold">Price:</span>
-                                        <span class="c-green" id="priceItems"></span>
-                                            <div class="col-12">
-                                                <div class="btn btn-primary w-100">Sumbit</div>
-                                            </div>
+                                          </div>
+                                          <span class="fw-bold">Price:</span>
+                                          <span class="c-green" id="priceItems">$100</span>
+                                          <div class="col-12">
+                                            <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                          </div>
                                         </div>
-                                    </form>
+                                      </form>
                                 </div>
                             </div>
                         </div>

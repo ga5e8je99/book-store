@@ -92,3 +92,44 @@ document.getElementById("expiryDate").addEventListener("input", function(event) 
         input.style.borderColor = "rgb(173, 144, 102)"; 
     }
 });
+
+document.getElementById("paymentForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const cardNumber = document.getElementById("cardNumber").value.trim();
+    const expiryDate = document.getElementById("expiryDate").value.trim();
+    const cvv = document.getElementById("cvv").value.trim();
+    const cardName = document.getElementById("cardName").value.trim();
+    const price = document.getElementById("priceItems").textContent.trim().replace('$', '');
+
+    // تحقق من صحة البيانات
+    if (!cardNumber || !expiryDate || !cvv) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      // إرسال البيانات إلى الخادم
+      const response = await fetch('http://localhost:3000/api/payments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cardNumber, expiryDate, cvv, cardName, price })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        // عرض رسالة النجاح وإعادة التوجيه
+        const alertBox = document.getElementById("aleart");
+        alertBox.classList.add("activealert");
+        setTimeout(() => {
+          alertBox.classList.remove("activealert");
+          window.location.href = "/";
+        }, 3000);
+      } else {
+        alert(result.error || "An error occurred.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to process the payment.");
+    }
+  });

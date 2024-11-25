@@ -13,7 +13,7 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
         },
         body: JSON.stringify({
             email: emailValue,
-            password: passwordValue
+            password: passwordValue 
         })
     })
     .then(response => {

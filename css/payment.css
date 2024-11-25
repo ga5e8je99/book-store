@@ -141,3 +141,18 @@ body {
 nav h4{
     color: rgb(173, 144, 102);
 }
+.alert-success{
+    position: fixed;
+    top: 50px;
+    z-index: 100;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    display: none;
+}
+.activealeart{
+  display: block !important;
+}

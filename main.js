@@ -106,3 +106,55 @@ document.addEventListener("click", (event) => {
     }
 });
 
+document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+    // التحقق من البيانات
+    const name = document.getElementById("formName").value.trim();
+    const email = document.getElementById("formEmail").value.trim();
+    const message = document.getElementById("formMessage").value.trim();
+
+    if (name === "" || email === "" || message === "") {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // التأكد من صحة البريد الإلكتروني
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // عرض التنبيه وإضافة الفئة
+    const alertBox = document.getElementById("aleart");
+    alertBox.classList.add("activealeart");
+    
+    // إزالة الفئة بعد 3 ثوانٍ
+    setTimeout(() => {
+      alertBox.classList.remove("activealeart");
+    }, 3000);
+  });
+
+  document.getElementById("subscriptionForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+    // التحقق من صحة البريد الإلكتروني
+    const emailInput = document.getElementById("subscriptionEmail").value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(emailInput)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // عرض التنبيه وإضافة الفئة
+    const alertBox = document.getElementById("aleartjoin");
+    alertBox.classList.add("activealeart");
+
+
+    // إزالة الفئة بعد 3 ثوانٍ
+    setTimeout(() => {
+      alertBox.classList.remove("activealeart");
+    }, 3000);
+  });

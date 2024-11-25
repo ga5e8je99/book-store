@@ -335,9 +335,9 @@
                   <img src="image/88.png" alt="Book Cover" class="img-fluid rounded">
               </div>
               <div class="col-md-10">
-                  <h5>Carmen Posadas</h5>
+                  <h5>Zetas til wedie</h5>
                   <h6>La leyenda de la peregrina</h6>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.</p>
+                  <p>Un poderoso thriller histórico que atraviesa un siglo repleto de venganzas, incestos y batallas.PREMIO PLANETA 2020 De la autora de la exitosa Trilogía de la Ciudad Blanca (El silencio de la ciudad blanca, Los ritos del agua, Los señores del tiempo).</p>
                   <div class="d-flex justify-content-between">
                       <span>363</span>
                       <span>1.7k</span>
@@ -357,7 +357,7 @@
             <div class="col-md-10">
                 <h5>Carmen Posadas</h5>
                 <h6>La leyenda de la peregrina</h6>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.</p>
+                <p>Their Monstrous Hearts ','PRE-ORDER NOW to get a deluxe limited edition with designed sprayed edges—available only on the first printing! This special first edition hardcover will include a gorgeous, shimmering jacket with effects, beautifully illustrated endpapers and sprayed edges.</p>
                 <div class="d-flex justify-content-between">
                     <span>363</span>
                     <span>1.7k</span>
@@ -376,8 +376,8 @@
           </div>
           <div class="col-md-10">
               <h5>Carmen Posadas</h5>
-              <h6>La leyenda de la peregrina</h6>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum.</p>
+              <h6>This motherless land</h6>
+              <p>Un poderoso thriller histórico que atraviesa un siglo repleto de venganzas, incestos y batallas.PREMIO PLANETA 2020 De la autora de la exitosa Trilogía de la Ciudad Blanca (El silencio de la ciudad blanca, Los ritos del agua, Los señores del tiempo).</p>
               <div class="d-flex justify-content-between">
                   <span>363</span>
                   <span>1.7k</span>
@@ -411,7 +411,12 @@
 
   <div class="container d-flex justify-content-center align-items-center">
 
-  
+    <div class="alert alert-success" role="alert" id="aleart">
+Your message has been sent successfully
+    </div>
+    <div class="alert alert-success" role="alert" id="aleartjoin">
+      Your email has been sent successfully
+          </div>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 790 563" fill="none">
         <g id="Image">
             <g id="g14">
@@ -713,9 +718,10 @@
     -------------------------------------------------------------
     ------------------------------------------------------------>
     
-    <form>
-      <h1 class="title text-center mb-4">Talk to Us</h1>
-  
+    <div class="container">
+      <form id="contactForm">
+        <h1 class="title text-center mb-4">Talk to Us</h1>
+    
         <!-- Name -->
         <div class="form-group position-relative">
           <label for="formName" class="d-block">
@@ -723,7 +729,7 @@
           </label>
           <input type="text" id="formName" class="form-control form-control-lg thick" placeholder="Name">
         </div>
-  
+    
         <!-- E-mail -->
         <div class="form-group position-relative">
           <label for="formEmail" class="d-block">
@@ -731,17 +737,17 @@
           </label>
           <input type="email" id="formEmail" class="form-control form-control-lg thick" placeholder="E-mail">
         </div>
-  
+    
         <!-- Message -->
         <div class="form-group message">
-          <textarea id="formMessage" class="form-control form-control-lg" rows="7" placeholder="Mensagem"></textarea>
+          <textarea id="formMessage" class="form-control form-control-lg" rows="7" placeholder="Message"></textarea>
         </div>
-      
+    
         <!-- Submit btn -->
         <div class="text-center">
-          <button type="submit" class="btn btn-primary" tabIndex="-1">Send message</button>
+          <button type="submit" class="btn btn-primary">Send message</button>
         </div>
-    </form>
+      </form>
     
   </div>
   </div>
@@ -795,7 +801,6 @@
       </div>
   </div>
 
-  <button class="support-button">Contact Us Now</button>
 </section>
 <section class="subscription-section">
   <h2 class="subscription-title">Join Our Book Community</h2>
@@ -803,21 +808,17 @@
       Subscribe to our newsletter to get updates on the latest books, special offers, and exclusive content just for you.
   </p>
   
-  <form class="subscription-form">
-      <input type="email" placeholder="Enter your email address" required class="subscription-input">
+  <div class="container">
+    <form class="subscription-form" id="subscriptionForm">
+      <input type="email" placeholder="Enter your email address" required class="subscription-input" id="subscriptionEmail">
       <button type="submit" class="subscription-button">Subscribe Now</button>
-  </form>
+    </form>
+  </div>
 </section>
   <!-- Footer -->
   <footer class="footer bg-light mt-4">
       <div class="container text-center py-3">
-          <div class="footer-links">
-              <a href="#">Service</a> |
-              <a href="#">Support</a> |
-              <a href="#">Company</a> |
-              <a href="#">Legal</a> |
-              <a href="#">Join Us</a>
-          </div>
+           
           <small class="d-block mt-2">Your Book Store &copy; 2024 - All rights reserved</small>
       </div>
   </footer>
