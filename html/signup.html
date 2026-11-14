@@ -3,46 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Stor sign up</title>
+  <title>Sign Up — Book Store</title>
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+  <!-- Custom Auth CSS -->
   <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
-  
-    <div class="logo p-5">Book Store</div>
-    <div class="container d-flex justify-content-center align-items-center vh-100">    
-        <div class="login-card p-5 w-100 ">
-          <h2 class="mb-3 text-center">Sign UP</h2>
-          <p class="text-center welcome">Welcome back !!!</p>
-          
-          <form id="signupForm">
-            <div class="mb-3">
-                <label for="uname" class="form-label">User Name</label>
-                <input type="text" class="form-control" id="uname" placeholder="your name" required>
-              </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="test@gmail.com" required>
+
+  <!-- Top Header -->
+  <header class="auth-header">
+    <a href="../index.html" class="logo-wrapper">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 512 512">
+        <path d="M512 150v332H359.43c-41.925 0-63.974 28.428-66.22 30h-74.42c-2.278-1.594-24.012-30-66.22-30H0V120h30v332h122.7c46.882 0 72.978 26.451 79.48 30h47.64c6.499-3.548 32.602-30 79.48-30H482V150z" fill="#AD9066"/>
+      </svg>
+      <h1 class="logo-text">Book<span>Store</span></h1>
+    </a>
+    <a href="../index.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+      <i class="fas fa-home me-1"></i> Back to Store
+    </a>
+  </header>
+
+  <!-- Main Centered Container -->
+  <main class="auth-container">
+    <div class="auth-card-wrapper">
+
+      <!-- Left Form Column -->
+      <div class="auth-form-column">
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join thousands of book lovers and enjoy member-only perks.</p>
+
+        <!-- Feedback Alert Banner -->
+        <div id="authAlertBanner" class="auth-alert-banner"></div>
+
+        <form id="signupForm">
+          <!-- Full Name -->
+          <div class="mb-3">
+            <label class="form-label" for="uname">Full Name</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-user"></i>
+              <input type="text" class="form-control-custom" id="uname" placeholder="Your Name" required autocomplete="name">
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="********" required>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label" for="email">Email Address</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-envelope"></i>
+              <input type="email" class="form-control-custom" id="email" placeholder="name@example.com" required autocomplete="email">
             </div>
-            <div class="mb-3">
-                <label for="cpassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="cpassword" placeholder="********" required>
-              </div>
-            <button type="submit" class="btn btn-primary w-100" onclick="window.open('../index.html')"><i class="fa-solid fa-caret-right"></i> SIGN UP</button>
-          </form>
-    
-        </div>
-        <img src="../image/undraw_book_lover_re_rwjy.svg" alt="" class="himage">
-        <img src="../image/undraw_bibliophile_re_xarc.svg" alt="" class="fimage">
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-lock"></i>
+              <input type="password" class="form-control-custom" id="password" placeholder="At least 6 characters" required autocomplete="new-password">
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="mb-4">
+            <label class="form-label" for="cpassword">Confirm Password</label>
+            <div class="input-icon-wrapper">
+              <i class="fas fa-shield-alt"></i>
+              <input type="password" class="form-control-custom" id="cpassword" placeholder="Confirm your password" required autocomplete="new-password">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-auth-submit" id="signupSubmitBtn">
+            <i class="fas fa-user-plus"></i> Create Account
+          </button>
+
+          <div class="auth-footer-text">
+            Already have an account? <a href="login.html">Sign In</a>
+          </div>
+        </form>
       </div>
 
-      <script src="../js/singup.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Right Visual Column -->
+      <div class="auth-visual-column">
+        <img src="../image/undraw_book_lover_re_rwjy.svg" alt="Book Lover">
+        <p class="auth-visual-quote">"There is no friend as loyal as a book."</p>
+        <span class="auth-visual-author">&mdash; Ernest Hemingway</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../js/singup.js"></script>
 </body>
 </html>

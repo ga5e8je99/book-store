@@ -1,115 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Checkout — Book Store</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Payment CSS -->
   <link rel="stylesheet" href="../css/payment.css">
-    <title>Document</title>
 </head>
 <body>
-    <header>
-        <div class="contanier">
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                  <a class="navbar-brand">
-                    <h4 class="logo"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M512 150v332H359.43c-41.925 0-63.974 28.428-66.22 30h-74.42c-2.278-1.594-24.012-30-66.22-30H0V120h30v332h122.7c46.882 0 72.978 26.451 79.48 30h47.64c6.499-3.548 32.602-30 79.48-30H482V150z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path><path d="M210.93 433.97C192.71 426.09 173 422 152.7 422H60V60h30v302h45c40.88 0 74.32 32.01 75.93 71.97zM359.3 90c-31.774 0-62.377 8.324-89.354 24.241A204.013 204.013 0 0 1 271 135v316.371a179.338 179.338 0 0 1 6.923-4.79C324.239 415.691 356.152 422 452 422V90z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path><path d="M241 437c0-57.897-47.551-105-106-105h-15V0c74.991 0 121 60.561 121 135z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path></g></svg> Book stores</h4></a>
-              </nav>
-        </div>
-    </header>
-    <div class="alert alert-success" role="alert" id="aleart">
-        Your purchase was completed successfully
-            </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12 mt-4">
-                <div class="card p-3">
-                    <p class="mb-0 fw-bold h4">Payment Methods</p>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card p-3">
-                    
-                    <div class="card-body border p-0">
-                        <p>
-                            <a class="btn btn-primary p-2 w-100 h-100 d-flex align-items-center justify-content-between"
-                                data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
-                                aria-controls="collapseExample">
-                                <span class="fw-bold">Credit Card</span>
-                                <span class="">
-                                    <span class="fab fa-cc-amex"></span>
-                                    <span class="fab fa-cc-mastercard"></span>
-                                    <span class="fab fa-cc-discover"></span>
-                                </span>
-                            </a>
-                        </p>
-                        <div class="collapse show p-3 pt-0" id="collapseExample">
-                            <div class="row">
-                                <div class="col-lg-5 mb-lg-0 mb-3">
-                                    <p class="h4 mb-0">Summary</p>
-                                    <p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: Name of
-                                            product</span>
-                                    </p>
-                                    <p class="mb-0">
-                                        
-                                    </p>
-                                    <p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
-                                        nihil neque
-                                        quisquam aut
-                                        repellendus, dicta vero? Animi dicta cupiditate, facilis provident quibusdam ab
-                                        quis,
-                                        iste harum ipsum hic, nemo qui!</p>
-                                </div>
-                                <div class="col-lg-7">
-                                    <form id="paymentForm" class="form" action="http://localhost:3000/api/payments" method="post">
-                                        <div class="row">
-                                          <div class="col-12">
-                                            <div class="form__div">
-                                              <input type="text" class="form-control" id="cardNumber" required>
-                                              <label for="" class="form__label">Card Number</label>
-                                            </div>
-                                          </div>
-                                          <div class="col-6">
-                                            <div class="form__div">
-                                              <input type="text" class="form-control" id="expiryDate" required placeholder="MM/YY" maxlength="5">
-                                              <label for="expiryDate" class="form__label">MM / YY</label>
-                                              <small id="error-msg" style="color: red; display: none;">Please refer to a month from 01 to 12 and a year from 25 to 30.</small>
-                                            </div>
-                                          </div>
-                                          <div class="col-6">
-                                            <div class="form__div">
-                                              <input type="text" class="form-control" id="cvv" placeholder=" " required>
-                                              <label for="" class="form__label">CVV Code</label>
-                                            </div>
-                                          </div>
-                                          <div class="col-12">
-                                            <div class="form__div">
-                                              <input type="text" class="form-control" placeholder=" " id="cardName">
-                                              <label for="" class="form__label">Name on the Card</label>
-                                            </div>
-                                          </div>
-                                          <span class="fw-bold">Price:</span>
-                                          <span class="c-green" id="priceItems">$100</span>
-                                          <div class="col-12">
-                                            <button type="submit" class="btn btn-primary w-100">Submit</button>
-                                          </div>
-                                        </div>
-                                      </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="btn btn-primary payment">
-                    Make Payment
-                </div>
-            </div>
-        </div>
+
+  <!-- ================= Header ================= -->
+  <header class="site-header">
+    <div class="container-fluid">
+      <a href="../index.html" class="logo-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 512 512">
+          <path d="M512 150v332H359.43c-41.925 0-63.974 28.428-66.22 30h-74.42c-2.278-1.594-24.012-30-66.22-30H0V120h30v332h122.7c46.882 0 72.978 26.451 79.48 30h47.64c6.499-3.548 32.602-30 79.48-30H482V150z" fill="#AD9066"/>
+        </svg>
+        <h1 class="logo-text">Book<span>Store</span></h1>
+      </a>
+      <div>
+        <a href="shop.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+          <i class="fas fa-arrow-left"></i> Return to Cart
+        </a>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/paymant.js"></script>
+  </header>
+
+  <!-- ================= Main Checkout Container ================= -->
+  <main class="checkout-container">
+    <div class="row g-4">
+
+      <!-- Left Column: Payment Form -->
+      <div class="col-lg-7">
+        <div class="payment-card">
+          <h2 class="payment-title"><i class="fas fa-lock text-success me-2"></i> Payment Details</h2>
+
+          <form id="paymentForm">
+            <!-- Card Number -->
+            <div class="mb-3">
+              <label class="form-label" for="cardNumber">Card Number</label>
+              <div class="card-number-wrapper">
+                <input type="text" id="cardNumber" class="form-control-custom" placeholder="4111 2222 3333 4444" maxlength="19" required autocomplete="cc-number">
+                <i class="fab fa-cc-visa card-brand-icon" id="cardBrandIcon"></i>
+              </div>
+              <small id="cardError" class="text-danger" style="display: none;">Invalid card number</small>
+            </div>
+
+            <!-- Expiry & CVV Row -->
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label" for="expiryDate">Expiration Date</label>
+                <input type="text" id="expiryDate" class="form-control-custom" placeholder="MM/YY" maxlength="5" required autocomplete="cc-exp">
+                <small id="expiryError" class="text-danger" style="display: none;">Invalid date (MM/YY)</small>
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="cvv">Security Code (CVV)</label>
+                <input type="password" id="cvv" class="form-control-custom" placeholder="123" maxlength="4" required autocomplete="cc-csc">
+                <small id="cvvError" class="text-danger" style="display: none;">3 or 4 digits</small>
+              </div>
+            </div>
+
+            <!-- Cardholder Name -->
+            <div class="mb-4">
+              <label class="form-label" for="cardName">Cardholder Name</label>
+              <input type="text" id="cardName" class="form-control-custom" placeholder="John Doe" required autocomplete="cc-name">
+            </div>
+
+            <!-- Payment Button -->
+            <button type="submit" class="btn-pay-now" id="submitButton">
+              <i class="fas fa-check-circle"></i> Pay Now (<span id="payBtnAmount">$0.00</span>)
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary Preview -->
+      <div class="col-lg-5">
+        <div class="order-summary-box">
+          <h3 class="summary-title" style="font-size: 1.35rem; margin-bottom: 1rem;">Items In Order</h3>
+          <div class="order-items-scroll" id="orderItemsList">
+            <!-- Rendered by JS -->
+          </div>
+
+          <div class="order-summary-total-row">
+            <span>Total Payable:</span>
+            <span class="total-due-badge" id="orderTotalAmount">$0.00</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ================= Success Confirmation Modal ================= -->
+  <div class="payment-success-modal" id="successModal">
+    <div class="payment-success-card">
+      <div class="success-check-circle">
+        <i class="fas fa-check"></i>
+      </div>
+      <h3>Payment Successful!</h3>
+      <p>Thank you for your purchase. A receipt and digital order confirmation has been created for you.</p>
+      <a href="../index.html" class="btn-pay-now" style="text-decoration: none;">
+        Return to Homepage
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/paymant.js"></script>
 </body>
 </html>

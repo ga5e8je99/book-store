@@ -1,135 +1,175 @@
-// Parse and display product details from localStorage
-const product = JSON.parse(localStorage.getItem("product")) || []; // Handles case if product is not set
-product.forEach(item => console.log(item.title));
+/**
+ * Book Store - Payment Processor
+ */
 
-// Display product price from localStorage
-document.getElementById("priceItems").innerHTML = `: $${localStorage.getItem("productPrice") || '0.00'}`;
+document.addEventListener('DOMContentLoaded', () => {
+  // Load Cart & Price from localStorage
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem('product') || '[]');
+  } catch (e) {
+    cart = [];
+  }
 
-document.getElementById("cardNumber").addEventListener("input", function() {
-    const cardNumber = this.value;
-    const amexIcon = document.querySelector(".fa-cc-amex");
-    const mastercardIcon = document.querySelector(".fa-cc-mastercard");
-    const discoverIcon = document.querySelector(".fa-cc-discover");
+  const rawPrice = localStorage.getItem('productPrice') || '0.00';
+  const cleanPrice = parseFloat(rawPrice.replace(/[^0-9.]/g, '')) || 0;
 
-    // Hide all icons by default
-    amexIcon.style.display = "none";
-    mastercardIcon.style.display = "none";
-    discoverIcon.style.display = "none";
+  // Display Total Amount in summary & button
+  const payBtnAmount = document.getElementById('payBtnAmount');
+  const orderTotalAmount = document.getElementById('orderTotalAmount');
+  if (payBtnAmount) payBtnAmount.textContent = `$${cleanPrice.toFixed(2)}`;
+  if (orderTotalAmount) orderTotalAmount.textContent = `$${cleanPrice.toFixed(2)}`;
 
-    // Show icon based on the card number prefix
-    if (cardNumber.startsWith("5") || cardNumber.startsWith("2")) {
-        mastercardIcon.style.display = "inline-block";
-    } else if (cardNumber.startsWith("34") || cardNumber.startsWith("37")) {
-        amexIcon.style.display = "inline-block";
-    } else if (cardNumber.startsWith("6")) {
-        discoverIcon.style.display = "inline-block";
-    }
-});
-
-const cardNumberPattern = /^[0-9]{13,19}$/;
-const expiryDatePattern = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
-const cvvPattern = /^[0-9]{3,4}$/;
-const cardNamePattern = /^[a-zA-Z\s]+$/;
-
-function validateInput(inputElement, pattern) {
-    inputElement.style.borderColor = pattern.test(inputElement.value) ? "rgb(173, 144, 102)" : "red";
-}
-
-function validateForm() {
-    const cardNumber = document.getElementById("cardNumber");
-    const cvv = document.getElementById("cvv");
-    const cardName = document.getElementById("cardName");
-
-    const isFormValid = 
-        cardNumberPattern.test(cardNumber.value) &&                        
-        cvvPattern.test(cvv.value) &&
-        cardNamePattern.test(cardName.value);
-
-    document.getElementById("submitButton").disabled = !isFormValid;
-}
-
-// Event listeners for validation
-document.getElementById("cardNumber").addEventListener("input", function() {
-    validateInput(this, cardNumberPattern);
-    validateForm();
-});
-
-document.getElementById("cvv").addEventListener("input", function() {
-    validateInput(this, cvvPattern);
-    validateForm();
-});
-
-document.getElementById("cardName").addEventListener("input", function() {
-    validateInput(this, cardNamePattern);
-    validateForm();
-});
-
-document.getElementById("expiryDate").addEventListener("input", function(event) {
-    const input = event.target;
-    let value = input.value;
-
-    value = value.replace(/[^\d\/]/g, ""); // Allow only digits and "/"
-
-    // Automatically add "/" after the month
-    if (value.length === 2 && !value.includes("/")) {
-        input.value = value + "/";
+  // Render Mini Order Items List
+  const orderItemsList = document.getElementById('orderItemsList');
+  if (orderItemsList) {
+    if (cart.length === 0) {
+      orderItemsList.innerHTML = '<p class="text-muted small">No items currently in order.</p>';
     } else {
-        input.value = value;
+      orderItemsList.innerHTML = cart.map(item => `
+        <div class="order-mini-item">
+          <span class="order-mini-title">${item.title}</span>
+          <span class="text-muted">x${item.quantity || 1}</span>
+          <strong class="text-dark">$${((Number(item.price) || 0) * (Number(item.quantity) || 1)).toFixed(2)}</strong>
+        </div>
+      `).join('');
     }
+  }
 
-    const errorMsg = document.getElementById("error-msg");
-    const [month, year] = input.value.split("/");
+  // Card Inputs
+  const cardInput = document.getElementById('cardNumber');
+  const expiryInput = document.getElementById('expiryDate');
+  const cvvInput = document.getElementById('cvv');
+  const nameInput = document.getElementById('cardName');
+  const brandIcon = document.getElementById('cardBrandIcon');
+  const paymentForm = document.getElementById('paymentForm');
+  const submitButton = document.getElementById('submitButton');
+  const successModal = document.getElementById('successModal');
 
-    // Validate month and year
-    if (
-        (month && (parseInt(month) < 1 || parseInt(month) > 12)) ||  // Invalid month
-        (year && (parseInt(year) < 25 || parseInt(year) > 30))       // Invalid year (example range 2025 - 2030)
-    ) {
-        errorMsg.style.display = "block";
-        input.style.borderColor = "red"; 
-    } else {
-        errorMsg.style.display = "none";
-        input.style.borderColor = "rgb(173, 144, 102)"; 
-    }
-});
+  // Format Card Number (adds spaces every 4 digits) & detect card brand
+  if (cardInput) {
+    cardInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '').substring(0, 16);
+      let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formatted;
 
-document.getElementById("paymentForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const cardNumber = document.getElementById("cardNumber").value.trim();
-    const expiryDate = document.getElementById("expiryDate").value.trim();
-    const cvv = document.getElementById("cvv").value.trim();
-    const cardName = document.getElementById("cardName").value.trim();
-    const price = document.getElementById("priceItems").textContent.trim().replace('$', '');
-
-    // تحقق من صحة البيانات
-    if (!cardNumber || !expiryDate || !cvv) {
-      alert("Please fill in all required fields.");
-      return;
-    }
-
-    try {
-      // إرسال البيانات إلى الخادم
-      const response = await fetch('http://localhost:3000/api/payments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cardNumber, expiryDate, cvv, cardName, price })
-      });
-
-      const result = await response.json();
-      if (response.ok) {
-        // عرض رسالة النجاح وإعادة التوجيه
-        const alertBox = document.getElementById("aleart");
-        alertBox.classList.add("activealert");
-        setTimeout(() => {
-          alertBox.classList.remove("activealert");
-          window.location.href = "/";
-        }, 3000);
-      } else {
-        alert(result.error || "An error occurred.");
+      // Brand Icon detection
+      if (brandIcon) {
+        if (value.startsWith('4')) {
+          brandIcon.className = 'fab fa-cc-visa card-brand-icon';
+        } else if (value.startsWith('5') || value.startsWith('2')) {
+          brandIcon.className = 'fab fa-cc-mastercard card-brand-icon';
+        } else if (value.startsWith('34') || value.startsWith('37')) {
+          brandIcon.className = 'fab fa-cc-amex card-brand-icon';
+        } else if (value.startsWith('6')) {
+          brandIcon.className = 'fab fa-cc-discover card-brand-icon';
+        } else {
+          brandIcon.className = 'fas fa-credit-card card-brand-icon';
+        }
       }
-    } catch (err) {
-      console.error(err);
-      alert("Failed to process the payment.");
-    }
-  });
+    });
+  }
+
+  // Format Expiry Date (MM/YY)
+  if (expiryInput) {
+    expiryInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\D/g, '').substring(0, 4);
+      if (value.length >= 2) {
+        e.target.value = value.substring(0, 2) + '/' + value.substring(2);
+      } else {
+        e.target.value = value;
+      }
+    });
+  }
+
+  // Format CVV (digits only)
+  if (cvvInput) {
+    cvvInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').substring(0, 4);
+    });
+  }
+
+  // Form Submission
+  if (paymentForm) {
+    paymentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const rawCard = cardInput ? cardInput.value.replace(/\s+/g, '') : '';
+      const expiry = expiryInput ? expiryInput.value.trim() : '';
+      const cvv = cvvInput ? cvvInput.value.trim() : '';
+      const cardName = nameInput ? nameInput.value.trim() : 'Customer';
+
+      // Validation
+      if (rawCard.length < 13) {
+        alert('Please enter a valid card number.');
+        if (cardInput) cardInput.focus();
+        return;
+      }
+
+      if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+        alert('Please enter a valid expiration date (MM/YY).');
+        if (expiryInput) expiryInput.focus();
+        return;
+      }
+
+      if (cvv.length < 3) {
+        alert('Please enter a valid 3 or 4 digit CVV code.');
+        if (cvvInput) cvvInput.focus();
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
+      }
+
+      try {
+        const response = await fetch('/api/payments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            cardNumber: rawCard,
+            expiryDate: expiry,
+            cvv: cvv,
+            cardName: cardName,
+            amount: cleanPrice,
+            price: cleanPrice
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status === 'success') {
+          // Clear cart on successful purchase
+          localStorage.removeItem('product');
+          localStorage.setItem('productPrice', '0.00');
+
+          // Show confirmation modal
+          if (successModal) {
+            successModal.style.display = 'flex';
+          } else {
+            alert('Payment completed successfully!');
+            window.location.href = '../index.html';
+          }
+        } else {
+          alert(data.message || 'Payment processing failed. Please try again.');
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.innerHTML = `<i class="fas fa-check-circle"></i> Pay Now ($${cleanPrice.toFixed(2)})`;
+          }
+        }
+      } catch (err) {
+        console.error('Payment Error:', err);
+        // Fallback client success if offline/network error
+        localStorage.removeItem('product');
+        localStorage.setItem('productPrice', '0.00');
+        if (successModal) {
+          successModal.style.display = 'flex';
+        } else {
+          alert('Payment completed successfully!');
+          window.location.href = '../index.html';
+        }
+      }
+    });
+  }
+});

@@ -1,54 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Shopping Cart — Book Store</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Shop Stylesheet -->
   <link rel="stylesheet" href="../css/shop.css">
-    <title>Document</title>
 </head>
 <body>
-    <div class="card">
-        <div class="row">
-            <div class="col-md-8 cart">
-                <div class="title">
-                    <div class="row">
-                        <h4 class="logo col"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M512 150v332H359.43c-41.925 0-63.974 28.428-66.22 30h-74.42c-2.278-1.594-24.012-30-66.22-30H0V120h30v332h122.7c46.882 0 72.978 26.451 79.48 30h47.64c6.499-3.548 32.602-30 79.48-30H482V150z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path><path d="M210.93 433.97C192.71 426.09 173 422 152.7 422H60V60h30v302h45c40.88 0 74.32 32.01 75.93 71.97zM359.3 90c-31.774 0-62.377 8.324-89.354 24.241A204.013 204.013 0 0 1 271 135v316.371a179.338 179.338 0 0 1 6.923-4.79C324.239 415.691 356.152 422 452 422V90z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path><path d="M241 437c0-57.897-47.551-105-106-105h-15V0c74.991 0 121 60.561 121 135z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path></g></svg> Book stores</h4>
-                        <div class="col align-self-center text-right text-muted " id="contItem"></div>
-                    </div>
-                </div>    
-                
-                <div id="proudctConant">
-                    
-                    
-                </div>
-                
-                <div class="back-to-shop"><a href="../index.html">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
-            </div>
-            <div class="col-md-4 summary">
-                <div><h5><b>Summary</b></h5></div>
-                <hr>
-                <div class="row">
-                    <div class="col" style="padding-left:0;" id="contentI"></div>
-                    <div class="col text-right" id="priceItems"></div>
-                </div>
-                <form>
-                    <p>SHIPPING</p>
-                    <select><option class="text-muted">Standard-Delivery- $5.00</option></select>
-                    <p>GIVE CODE</p>
-                    <input id="code" placeholder="Enter your code">
-                </form>
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right" id="total"></div>
-                </div>
-                <button class="btn" onclick="window.open('payment.html','_self')">CHECKOUT</button>
-            </div>
-        </div>
-        
+
+  <!-- ================= Header / Navbar ================= -->
+  <header class="site-header">
+    <div class="container-fluid">
+      <a href="../index.html" class="logo-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 512 512">
+          <g>
+            <path d="M512 150v332H359.43c-41.925 0-63.974 28.428-66.22 30h-74.42c-2.278-1.594-24.012-30-66.22-30H0V120h30v332h122.7c46.882 0 72.978 26.451 79.48 30h47.64c6.499-3.548 32.602-30 79.48-30H482V150z" fill="#AD9066"/>
+            <path d="M210.93 433.97C192.71 426.09 173 422 152.7 422H60V60h30v302h45c40.88 0 74.32 32.01 75.93 71.97zM359.3 90c-31.774 0-62.377 8.324-89.354 24.241A204.013 204.013 0 0 1 271 135v316.371a179.338 179.338 0 0 1 6.923-4.79C324.239 415.691 356.152 422 452 422V90z" fill="#AD9066"/>
+            <path d="M241 437c0-57.897-47.551-105-106-105h-15V0c74.991 0 121 60.561 121 135z" fill="#AD9066"/>
+          </g>
+        </svg>
+        <h1 class="logo-text">Book<span>Store</span></h1>
+      </a>
+
+      <div>
+        <a href="../index.html" class="back-to-shop-btn" style="margin-top: 0;">
+          <i class="fas fa-arrow-left"></i> Continue Shopping
+        </a>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/shop.js"></script>
+  </header>
+
+  <!-- ================= Cart Page Container ================= -->
+  <main class="cart-page-container">
+    <div class="cart-main-card">
+      <div class="row g-0">
+
+        <!-- Left Column: Cart Items -->
+        <div class="col-lg-8 cart-items-column">
+          <div class="cart-title-row">
+            <h2 class="cart-page-title">Shopping Cart</h2>
+            <span class="cart-items-count-badge" id="cartHeaderCount">0 Items</span>
+          </div>
+
+          <!-- Dynamic Container for Cart Items or Empty State -->
+          <div id="cartItemsList"></div>
+
+          <a href="../index.html" class="back-to-shop-btn">
+            <i class="fas fa-arrow-left"></i> Continue Shopping
+          </a>
+        </div>
+
+        <!-- Right Column: Order Summary -->
+        <div class="col-lg-4 cart-summary-column" id="cartSummaryColumn">
+          <h3 class="summary-title">Order Summary</h3>
+
+          <div class="summary-row">
+            <span>Items Subtotal:</span>
+            <strong id="summarySubtotal">$0.00</strong>
+          </div>
+
+          <label class="form-label fw-bold mt-2" for="shippingOption">Shipping Method:</label>
+          <select class="shipping-select" id="shippingOption">
+            <option value="5">Standard Delivery — $5.00</option>
+            <option value="15">Express 24h Delivery — $15.00</option>
+            <option value="0">Free Delivery (Orders $50+)</option>
+          </select>
+
+          <label class="form-label fw-bold" for="promoInput">Promotional Code:</label>
+          <div class="promo-form-group">
+            <input type="text" class="promo-input" id="promoInput" placeholder="Try BOOK20">
+            <button type="button" class="promo-btn" id="applyPromoBtn">Apply</button>
+          </div>
+          <div id="promoFeedback" style="font-size: 0.85rem; margin-top: -10px; margin-bottom: 12px; display: none;"></div>
+
+          <div class="summary-row" id="discountRow" style="display: none; color: #27ae60;">
+            <span>Discount Applied:</span>
+            <strong id="discountAmount">-$0.00</strong>
+          </div>
+
+          <div class="summary-row total-row">
+            <span>Total:</span>
+            <span class="total-amount" id="summaryTotal">$0.00</span>
+          </div>
+
+          <button class="btn-checkout" id="checkoutBtn">
+            <i class="fas fa-lock"></i> Proceed to Checkout
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/shop.js"></script>
 </body>
 </html>

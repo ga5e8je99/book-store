@@ -1,181 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/section.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science & Knowledge — Book Store</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>Document</title>
+  <!-- Section CSS -->
+  <link rel="stylesheet" href="../css/section.css">
 </head>
 <body>
-    <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <h4 class="logo" onclick="window.open('../index.html')"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M512 150v332H359.43c-41.925 0-63.974 28.428-66.22 30h-74.42c-2.278-1.594-24.012-30-66.22-30H0V120h30v332h122.7c46.882 0 72.978 26.451 79.48 30h47.64c6.499-3.548 32.602-30 79.48-30H482V150z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path><path d="M210.93 433.97C192.71 426.09 173 422 152.7 422H60V60h30v302h45c40.88 0 74.32 32.01 75.93 71.97zM359.3 90c-31.774 0-62.377 8.324-89.354 24.241A204.013 204.013 0 0 1 271 135v316.371a179.338 179.338 0 0 1 6.923-4.79C324.239 415.691 356.152 422 452 422V90z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path><path d="M241 437c0-57.897-47.551-105-106-105h-15V0c74.991 0 121 60.561 121 135z" fill="#AD9066" opacity="1" data-original="#000000" class=""></path></g></svg> Book stores</h4>
-        </div>
-      </nav>
-      <div class="jumbotron jumbotron-fluid" style="background-image: url('../image/new.jpg');">
-        <div class="shadow"></div>
-        <div class="container">
-          <h1 class="display-4">A collection of scientific books</h1>
-          <p class="lead">50% discount on the occasion of World Reading Day </p>
+
+  <!-- ================= Header ================= -->
+  <header class="site-header">
+    <div class="container-fluid">
+      <a href="../index.html" class="logo-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 512 512">
+          <path d="M512 150v332H359.43c-41.925 0-63.974 28.428-66.22 30h-74.42c-2.278-1.594-24.012-30-66.22-30H0V120h30v332h122.7c46.882 0 72.978 26.451 79.48 30h47.64c6.499-3.548 32.602-30 79.48-30H482V150z" fill="#AD9066"/>
+        </svg>
+        <h1 class="logo-text">Book<span>Store</span></h1>
+      </a>
+
+      <ul class="nav-menu d-none d-md-flex">
+        <li class="nav-item"><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+        <li class="nav-item"><a href="story.html" class="nav-link"><i class="fas fa-book"></i> Novels</a></li>
+        <li class="nav-item"><a href="science.html" class="nav-link active"><i class="fas fa-flask"></i> Science</a></li>
+        <li class="nav-item"><a href="bestsaller.html" class="nav-link"><i class="fas fa-fire"></i> Best Sellers</a></li>
+        <li class="nav-item"><a href="newbook.html" class="nav-link"><i class="fas fa-sparkles"></i> New Releases</a></li>
+      </ul>
+
+      <div>
+        <a href="shop.html" class="cart-btn-link" title="Shopping Cart">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= Category Hero ================= -->
+  <div class="container">
+    <div class="category-hero" style="background-image: url('../image/new.jpg');">
+      <div class="category-hero-overlay"></div>
+      <div class="category-hero-content">
+        <h1>Science & Astrophysics</h1>
+        <p>Explore the frontiers of the cosmos, biology, quantum physics, and human discovery.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Book Grid ================= -->
+  <main class="container my-5">
+    <div class="row g-4">
+
+      <!-- Book 1 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="category-book-card">
+          <div class="category-card-top">
+            <img src="../image/32.png" class="category-book-img" alt="Cosmic Wonders">
+            <div class="category-book-header">
+              <h5>Cosmic Wonders & Relativity</h5>
+              <div class="category-book-price">$45.00</div>
+              <div class="category-book-rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="category-book-desc">
+            An astounding illustrated journey across galaxies, event horizons, and the foundational discoveries that shaped modern astronomy.
+          </p>
+          <div class="category-card-actions">
+            <span class="text-muted small"><i class="fas fa-heart text-danger me-1"></i> 240 Likes</span>
+            <button class="btn-card-add" onclick="addBookToCart('image/32.png', 'Cosmic Wonders & Relativity', 45, 'Science')">
+              <i class="fas fa-plus"></i> Add to Cart
+            </button>
+          </div>
         </div>
       </div>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/32.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>Liberation Day: Stories</span><span class="text-black-50">45$</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6>NEW YORK TIMES BESTSELLER • “One of our most inventive purveyors of the form returns with pitch-perfect, genre-bending stories that stare into the abyss of our national character. . . . An exquisite work from a writer whose reach is galactic.”—Oprah Daily
- 
-                        Booker Prize winner George Saunders returns with his first collection of short stories since the New York Times bestseller Tenth of December.
-                        
-                        ONE OF THE BEST BOOKS OF THE YEAR: The New York Times Book Review, The New Yorker, Oprah Daily, NPR, Time, USA Today, The Guardian, Esquire, Newsweek, Kirkus Reviews, Booklist, Library Journal</h6>
-                    <div class="d-flex justify-content-between install mt-3"><span>like 172</span><span class="text-primary">    </span></div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/53.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>Flying Lessons & Other Stories</span><span class="text-black-50">23$ </span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6>Whether it is basketball dreams, family fiascos, first crushes, or new neighborhoods, this bold short story collection—written by some of the best children’s authors including Kwame Alexander, Meg Medina, Jacqueline Woodson, and many more and published in partnership with We Need Diverse Books—celebrates the uniqueness and universality in all of us.
- 
-                        "Will resonate with any kid who's ever felt different—which is to say, every kid." —Time</h6>
-                      
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/58.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>White Cat, Black Dog: Stories</span><span class="text-black-50">30$</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6>NATIONAL BESTSELLER • NEW YORK TIMES EDITORS’ CHOICE • “The Brothers Grimm meet Black Mirror meets Alice in Wonderland. . . . In seven remixed fairy tales, Link delivers wit and dreamlike intrigue.”—Time
- 
-                        FINALIST FOR THE LOCUS AWARD, THE MARK TWAIN AMERICAN VOICE IN LITERATURE AWARD, WORLD FANTASY AWARD, CHAUTAUQUA PRIZE, AND KIRKUS PRIZE • LONGLISTED FOR THE MARK TWAIN AMERICAN VOICE IN LITERATURE AWARD • “Thought-provoking and wonderfully told . . . so seamlessly entwines the real with the surreal that the stories threaten to slip into reality, resonating long after reading.”—BuzzFeed</h6>
-                      
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/science.jpg" width="70">
-                        <div class="d-flex flex-column ml-2"><span>Banyan Moon: A Novel</span><span class="text-black-50">10$</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6> TODAY Show #ReadWithJenna Book Club Pick
 
-                        "A riveting mother-daughter tale." — Elle
-                        
-                        ""Radiant. … An intimate account of one family’s planting of roots in American soil and the sacrifices great and small that each member makes along the way.” — Washington Post</h6>
-                    <div class="d-flex justify-content-between install mt-3"><span>Installed 1234 times</span><span class="text-primary">    </span></div>
-                </div>
+      <!-- Book 2 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="category-book-card">
+          <div class="category-card-top">
+            <img src="../image/33.png" class="category-book-img" alt="Biology of Growth">
+            <div class="category-book-header">
+              <h5>The Architecture of Living Systems</h5>
+              <div class="category-book-price">$38.00</div>
+              <div class="category-book-rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+              </div>
             </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/44.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>The Vacancy in Room 10</span><span class="text-black-50">15$</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6>The Most Anticipated 2024 Book Releases by Nerd Daily
-
-                        Most Anticipated Crime Fiction Novels of 2024 by Novel Suspects
-                        
-                        "[An] entertaining thriller [that] maintain[s] tension and intrigue through to the satisfying end. The author’s fans will devour this.” —Publishers Weekly
-                        
-                        The Paris Apartment meets The Wrong Family in this thrilling tale of crime, passion and murder set in a run-down apartment complex packed with shady characters willing to go to deadly lengths to keep their darkest secrets from the stranger in their midst.
-                        
-                        When Anna Hartley’s husband, Henry, calls her with a terrible, guilty confession
-                        </h6>
-                    <div class="d-flex justify-content-between install mt-3"><span>like 345 </span><span class="text-primary">    </span></div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/45.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>Thunder Song: Essays </span><span class="text-black-50">6$</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6>Drawing on a rich family archive as well as the anthropological work of her late great-grandmother, Sasha LaPointe explores themes ranging from indigenous identity and stereotypes to cultural displacement and environmental degradation to understand what our experiences teach us about the power of community, commitment, and conscientious honesty.
-
-                        Unapologetically punk, the essays in Thunder Song segue from the miraculous to the mundane, from the spiritual to the physical, as they examine the role of art—in particular music—and community in helping a new generation of indigenous people claim the strength of their heritage while defining their own path in the contemporary world.</h6>
-                    <div class="d-flex justify-content-between install mt-3"><span>like 345</span><span class="text-primary">    </span></div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/32.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>The Blue Hour: A Novel</span><span class="text-black-50">60%</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6>"The best Paula Hawkins yet–by a tense and haunting mile."–Lee Child
-
-                        "An atmospheric, stylish puzzle box of a thriller... truly exceptional."–Liz Moore, New York Times bestselling author of The God of the Woods
-                        
-                        "A masterful exploration of the nature of obsession...I loved it."–Angie Kim, New York Times bestselling author of Happiness Falls and Miracle Creek
-                        
-                        The propulsive and powerful new novel from the #1 New York Times bestselling author of The Girl on the Train
-                        
-                        Welcome to Eris: an island with only one house, one inhabitant, one way out. Unreachable from the Scottish mainland for twelve hours each day.
-                        
-                        Once home to Vanessa: A famous artist whose notoriously unfaithful husband disappeared twenty years ago.
-                        
-                        Now home to Grace: A solitary creature of the tides, content in her own isolation.
-                        
-                        But when a shocking discovery is made in an art gallery far away in London, a visitor comes calling.
-                        
-                        And the secrets of Eris threaten to emerge....
-                        
-                        A masterful novel that is as compelling as it is unsettling, The Blue Hour recalls the sophisticated suspense of Shirley Jackson and Patricia Highsmith and cements Hawkins’s place among the very best of our most nuanced and stylish storytellers.
-                        
-                        "Atmospheric and marvelously twisty."–Danya Kukafka, author of Notes on an Execution
-                        
-                        “Reminiscent of du Maurier: art, islands, missing spouses ... Hard to put down.”–Mick Herron
-                        
-                        "A masterpiece! Gorgeous and chilling."–Shari Lapena
-                        
-                        </h6>
-                    <div class="d-flex justify-content-between install mt-3"><span>Installed 345 times</span><span class="text-primary">    </span></div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/33.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>This Motherless Land: A Read with Jenna Pick</span><span class="text-black-50">6$</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6>READ WITH JENNA BOOK CLUB PICK AS FEATURED ON TODAY
-
-                        From the acclaimed author of Wahala, a “vibrant” (Charmaine Wilkerson) decolonial retelling of Mansfield Park: Jane Austen meets The Vanishing Half</h6>
-                    <div class="d-flex justify-content-between install mt-3"><span>like 345</span><span class="text-primary">    </span></div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3">
-                    <div class="d-flex flex-row mb-3"><img src="../image/40.png" width="70">
-                        <div class="d-flex flex-column ml-2"><span>Banyan Moon: A Novel</span><span class="text-black-50">10$</span><span class="ratings"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span></div>
-                    </div>
-                    <h6> TODAY Show #ReadWithJenna Book Club Pick
-
-                        "A riveting mother-daughter tale." — Elle
-                        
-                        ""Radiant. … An intimate account of one family’s planting of roots in American soil and the sacrifices great and small that each member makes along the way.” — Washington Post</h6>
-                    <div class="d-flex justify-content-between install mt-3"><span>Installed 1234 times</span><span class="text-primary">    </span></div>
-                </div>
-            </div>
-            
-            </div>
-            
+          </div>
+          <p class="category-book-desc">
+            Investigating evolutionary morphology, biological patterns, and mathematical growth sequences found throughout natural ecosystems.
+          </p>
+          <div class="category-card-actions">
+            <span class="text-muted small"><i class="fas fa-heart text-danger me-1"></i> 180 Likes</span>
+            <button class="btn-card-add" onclick="addBookToCart('image/33.png', 'The Architecture of Living Systems', 38, 'Science')">
+              <i class="fas fa-plus"></i> Add to Cart
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Book 3 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="category-book-card">
+          <div class="category-card-top">
+            <img src="../image/34.png" class="category-book-img" alt="Quantum Horizons">
+            <div class="category-book-header">
+              <h5>Quantum Horizons</h5>
+              <div class="category-book-price">$32.00</div>
+              <div class="category-book-rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="category-book-desc">
+            Demystifying particle physics, quantum entanglement, and the cutting edge of next-generation computing for curious minds.
+          </p>
+          <div class="category-card-actions">
+            <span class="text-muted small"><i class="fas fa-heart text-danger me-1"></i> 315 Likes</span>
+            <button class="btn-card-add" onclick="addBookToCart('image/34.png', 'Quantum Horizons', 32, 'Science')">
+              <i class="fas fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book 4 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="category-book-card">
+          <div class="category-card-top">
+            <img src="../image/35.png" class="category-book-img" alt="Oceanography">
+            <div class="category-book-header">
+              <h5>The Abyssal Depths: Ocean Science</h5>
+              <div class="category-book-price">$29.00</div>
+              <div class="category-book-rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+          </div>
+          <p class="category-book-desc">
+            Discover the unmapped ecosystems of earth deep ocean trenches, hydrothermal vents, and bioluminescent species.
+          </p>
+          <div class="category-card-actions">
+            <span class="text-muted small"><i class="fas fa-heart text-danger me-1"></i> 195 Likes</span>
+            <button class="btn-card-add" onclick="addBookToCart('image/35.png', 'The Abyssal Depths: Ocean Science', 29, 'Science')">
+              <i class="fas fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book 5 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="category-book-card">
+          <div class="category-card-top">
+            <img src="../image/30.png" class="category-book-img" alt="Botany">
+            <div class="category-book-header">
+              <h5>Botanical Intelligence</h5>
+              <div class="category-book-price">$34.00</div>
+              <div class="category-book-rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="category-book-desc">
+            How plants communicate, navigate environmental changes, and support planetary biodiversity through fungal mycorrhizal networks.
+          </p>
+          <div class="category-card-actions">
+            <span class="text-muted small"><i class="fas fa-heart text-danger me-1"></i> 265 Likes</span>
+            <button class="btn-card-add" onclick="addBookToCart('image/30.png', 'Botanical Intelligence', 34, 'Science')">
+              <i class="fas fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book 6 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="category-book-card">
+          <div class="category-card-top">
+            <img src="../image/31.png" class="category-book-img" alt="Neurology">
+            <div class="category-book-header">
+              <h5>The Neuroplastic Mind</h5>
+              <div class="category-book-price">$42.00</div>
+              <div class="category-book-rating">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="category-book-desc">
+            Groundbreaking discoveries in human brain plasticity, memory retention, cognitive adaptability, and mental resilience.
+          </p>
+          <div class="category-card-actions">
+            <span class="text-muted small"><i class="fas fa-heart text-danger me-1"></i> 290 Likes</span>
+            <button class="btn-card-add" onclick="addBookToCart('image/31.png', 'The Neuroplastic Mind', 42, 'Science')">
+              <i class="fas fa-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <footer class="footer bg-light mt-4">
-        <div class="container text-center py-3">
-            <div class="footer-links">
-                <a href="#">Service</a> |
-                <a href="#">Support</a> |
-                <a href="#">Company</a> |
-                <a href="#">Legal</a> |
-                <a href="#">Join Us</a>
-            </div>
-            <small class="d-block mt-2"> Store &copy; 2024 - All rights reserved</small>
-        </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container-custom" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/category.js"></script>
 </body>
 </html>

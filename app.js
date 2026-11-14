@@ -34,6 +34,9 @@ app.use(cookieParser());
 app.use(cors());
 app.options('*', cors());
 
+// Serve static frontend files
+app.use(express.static(__dirname));
+
 
 
 

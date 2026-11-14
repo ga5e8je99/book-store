@@ -1,0 +1,30 @@
+{
+  "storeName": "BookStore",
+  "contactEmail": "support@bookstore.com",
+  "heroAnnouncement": {
+    "text": "Spring Literary Season • Use code BOOK20 for 20% off",
+    "code": "BOOK20",
+    "active": true
+  },
+  "promoCodes": [
+    {
+      "code": "BOOK20",
+      "discount": 20,
+      "active": true,
+      "usageCount": 18
+    },
+    {
+      "code": "WELCOME10",
+      "discount": 10,
+      "active": true,
+      "usageCount": 42
+    },
+    {
+      "code": "SUMMER30",
+      "discount": 30,
+      "active": true,
+      "usageCount": 5
+    }
+  ],
+  "updatedAt": "2026-11-14T08:40:43.510Z"
+}
