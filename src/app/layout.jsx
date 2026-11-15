@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import QuickViewModal from '../components/QuickViewModal';
 import Toast from '../components/Toast';
+import AosInit from '../components/AosInit';
 
 export const metadata = {
   title: 'BookStore — Premier Modern Reading Platform',
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body suppressHydrationWarning>
+        <AosInit />
         <AuthProvider>
           <CartProvider>
             <Navbar />

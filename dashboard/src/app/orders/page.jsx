@@ -8,6 +8,7 @@ export default function OrdersSalesPage() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [toastMessage, setToastMessage] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const showToast = (msg) => {
     setToastMessage(msg);
@@ -46,6 +47,89 @@ export default function OrdersSalesPage() {
       }
     } catch (e) {
       alert('Failed to update status');
+    }
+  };
+
+  const handleDeleteOrder = async (orderId) => {
+    if (confirm(`Are you sure you want to permanently delete order #${orderId.slice(-6)}? This action cannot be undone.`)) {
+      try {
+        const res = await fetch(`http://localhost:3000/api/orders?id=${orderId}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          showToast(`Order #${orderId.slice(-6)} deleted successfully!`);
+          setOrders((prev) => prev.filter((o) => o._id !== orderId && o.id !== orderId && o.orderId !== orderId));
+        } else {
+          alert('Failed to delete order');
+        }
+      } catch (e) {
+        alert('Network error while deleting order');
+      }
+    }
+  };
+
+  const handleClearTestOrders = async () => {
+    if (confirm('Are you sure you want to delete all legacy test transactions and keep only real customer orders with items?')) {
+      try {
+        const res = await fetch('http://localhost:3000/api/orders', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'clear_tests' })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast(data.message || 'Cleaned test orders!');
+          fetchOrders();
+          setSelectedIds([]);
+        } else {
+          alert('Failed to clean test orders');
+        }
+      } catch (e) {
+        alert('Network error');
+      }
+    }
+  };
+
+  const toggleSelectOrder = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedIds(filteredOrders.map((o) => o._id || o.id || o.orderId));
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedIds.length === 0) return;
+    if (confirm(`Are you sure you want to permanently delete ${selectedIds.length} selected orders?`)) {
+      try {
+        const res = await fetch('http://localhost:3000/api/orders', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ids: selectedIds })
+        });
+        if (res.ok) {
+          showToast(`Deleted ${selectedIds.length} selected orders successfully!`);
+          setOrders((prev) =>
+            prev.filter(
+              (o) =>
+                !selectedIds.includes(o._id) &&
+                !selectedIds.includes(o.id) &&
+                !selectedIds.includes(o.orderId)
+            )
+          );
+          setSelectedIds([]);
+        } else {
+          alert('Failed to delete selected orders');
+        }
+      } catch (e) {
+        alert('Network error while deleting orders');
+      }
     }
   };
 
@@ -108,9 +192,31 @@ export default function OrdersSalesPage() {
             Customer Orders Log
           </h3>
 
-          <button type="button" className="btn-primary-admin" onClick={fetchOrders}>
-            <i className="fas fa-sync-alt"></i> Refresh Log
-          </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              type="button"
+              onClick={handleClearTestOrders}
+              style={{
+                background: '#dc2626',
+                color: '#ffffff',
+                border: 'none',
+                padding: '8px 14px',
+                borderRadius: '6px',
+                fontWeight: 600,
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
+              title="Delete dummy test orders and keep only real orders"
+            >
+              <i className="fas fa-trash-alt"></i> Clean Test Orders
+            </button>
+            <button type="button" className="btn-primary-admin" onClick={fetchOrders}>
+              <i className="fas fa-sync-alt"></i> Refresh Log
+            </button>
+          </div>
         </div>
 
         {/* Filter bar */}
@@ -147,27 +253,107 @@ export default function OrdersSalesPage() {
             No orders match your filter criteria.
           </div>
         ) : (
-          <div className="data-table-wrapper">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Order Reference</th>
-                  <th>Customer Name</th>
-                  <th>Payment Type</th>
-                  <th>Card Mask / Method</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Update Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredOrders.map((ord) => {
-                  const isCod = ord.paymentMethod === 'cod';
-                  return (
-                    <tr key={ord._id || ord.id || ord.orderId}>
-                      <td style={{ fontFamily: 'monospace', fontWeight: 800, color: '#818cf8' }}>
-                        {ord.orderId ? `#${ord.orderId}` : `#${ord._id?.slice(-8) || 'ORD'}`}
-                      </td>
+          <div>
+            {selectedIds.length > 0 && (
+              <div style={{
+                background: '#1e293b',
+                border: '1px solid #4f46e5',
+                padding: '10px 16px',
+                borderRadius: '8px',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '12px'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#e2e8f0', fontSize: '0.9rem', fontWeight: 600 }}>
+                  <i className="fas fa-check-square" style={{ color: '#818cf8' }}></i>
+                  <span>{selectedIds.length} order{selectedIds.length > 1 ? 's' : ''} selected</span>
+                </div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button
+                    type="button"
+                    onClick={handleDeleteSelected}
+                    style={{
+                      background: '#dc2626',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '7px 14px',
+                      borderRadius: '6px',
+                      fontWeight: 700,
+                      fontSize: '0.85rem',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    <i className="fas fa-trash-alt"></i> Delete Selected ({selectedIds.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedIds([])}
+                    style={{
+                      background: 'transparent',
+                      color: '#94a3b8',
+                      border: '1px solid #475569',
+                      padding: '7px 12px',
+                      borderRadius: '6px',
+                      fontSize: '0.85rem',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Clear Selection
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="data-table-wrapper">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '40px', textAlign: 'center' }}>
+                      <input
+                        type="checkbox"
+                        checked={filteredOrders.length > 0 && selectedIds.length === filteredOrders.length}
+                        onChange={handleSelectAll}
+                        style={{ cursor: 'pointer', width: '16px', height: '16px', accentColor: '#4f46e5' }}
+                        title="Select All"
+                      />
+                    </th>
+                    <th>Order Reference</th>
+                    <th>Customer Name</th>
+                    <th>Payment Type</th>
+                    <th>Card Mask / Method</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                    <th style={{ textAlign: 'center' }}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredOrders.map((ord) => {
+                    const isCod = ord.paymentMethod === 'cod';
+                    const ordKey = ord._id || ord.id || ord.orderId;
+                    const isSelected = selectedIds.includes(ordKey);
+                    return (
+                      <tr
+                        key={ordKey}
+                        style={{ background: isSelected ? 'rgba(79, 70, 229, 0.12)' : 'transparent' }}
+                      >
+                        <td style={{ textAlign: 'center' }}>
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleSelectOrder(ordKey)}
+                            style={{ cursor: 'pointer', width: '16px', height: '16px', accentColor: '#4f46e5' }}
+                          />
+                        </td>
+                        <td style={{ fontFamily: 'monospace', fontWeight: 800, color: '#818cf8' }}>
+                          {ord.orderId ? `#${ord.orderId}` : `#${ord._id?.slice(-8) || 'ORD'}`}
+                        </td>
                       <td>
                         <div style={{ fontWeight: 700, color: '#ffffff' }}>
                           {ord.customerName || ord.cardName || 'Valued Customer'}
@@ -227,14 +413,36 @@ export default function OrdersSalesPage() {
                           <option value="cancelled">Cancelled</option>
                         </select>
                       </td>
+                      <td style={{ textAlign: 'center' }}>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteOrder(ord._id || ord.id || ord.orderId)}
+                          title="Delete this order permanently"
+                          style={{
+                            background: 'transparent',
+                            border: '1px solid #ef4444',
+                            color: '#ef4444',
+                            borderRadius: '6px',
+                            padding: '5px 10px',
+                            cursor: 'pointer',
+                            fontSize: '0.82rem',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                        >
+                          <i className="fas fa-trash-alt"></i> Delete
+                        </button>
+                      </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+    </div>
     </div>
   );
 }

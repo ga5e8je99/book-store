@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import AnalyticsCharts from '../components/AnalyticsCharts';
 
 export default function DashboardOverviewPage() {
   const [stats, setStats] = useState({
@@ -10,6 +11,9 @@ export default function DashboardOverviewPage() {
     booksCount: 0,
     usersCount: 0
   });
+  const [rawOrders, setRawOrders] = useState([]);
+  const [rawBooks, setRawBooks] = useState([]);
+  const [rawUsers, setRawUsers] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +29,10 @@ export default function DashboardOverviewPage() {
         const orders = ordersRes.data?.orders || [];
         const books = booksRes.data?.books || [];
         const users = usersRes.data?.users || [];
+
+        setRawOrders(orders);
+        setRawBooks(books);
+        setRawUsers(users);
 
         const totalRevenue = orders.reduce((sum, o) => sum + (Number(o.amount) || 0), 0);
 
@@ -119,6 +127,9 @@ export default function DashboardOverviewPage() {
           </div>
         </div>
       </div>
+
+      {/* Annual Revenue, Users Growth & Best Sellers Analytics */}
+      <AnalyticsCharts orders={rawOrders} books={rawBooks} users={rawUsers} />
 
       {/* Main Panel: Recent Orders */}
       <div className="panel-card">

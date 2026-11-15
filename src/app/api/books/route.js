@@ -156,21 +156,31 @@ export async function DELETE(request) {
   try {
     const { searchParams } = new URL(request.url);
     let id = searchParams.get('id');
+    let ids = searchParams.get('ids')?.split(',').filter(Boolean);
 
-    if (!id) {
-      const body = await request.json().catch(() => ({}));
-      id = body.id;
-    }
+    const body = await request.json().catch(() => ({}));
+    if (body.id) id = body.id;
+    if (body.ids && Array.isArray(body.ids)) ids = body.ids;
 
-    if (!id) {
+    if (!id && (!ids || ids.length === 0)) {
       return NextResponse.json(
-        { status: 'fail', message: 'Book ID is required for deletion' },
+        { status: 'fail', message: 'Book ID or IDs are required for deletion' },
         { status: 400, headers: corsHeaders }
       );
     }
 
     let books = getBooks();
     const initialLen = books.length;
+
+    if (ids && ids.length > 0) {
+      books = books.filter((b) => !ids.includes(b.id));
+      saveBooks(books);
+      return NextResponse.json(
+        { status: 'success', message: `Deleted ${initialLen - books.length} books successfully` },
+        { headers: corsHeaders }
+      );
+    }
+
     books = books.filter((b) => b.id !== id);
 
     if (books.length === initialLen) {

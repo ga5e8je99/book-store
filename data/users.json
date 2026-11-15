@@ -1,26 +1,5 @@
 [
   {
-    "_id": "user_1794570064317",
-    "name": "Gamal",
-    "email": "gamal@example.com",
-    "password": "$2a$12$O4RiLZHWCQ9oMeQPllQer.6C41oAhqyk7FItCnx/ZZ9CNH00cyq..",
-    "createdAt": "2026-11-13T11:41:04.317Z"
-  },
-  {
-    "_id": "user_1794570451640",
-    "name": "Layla",
-    "email": "layla@test.com",
-    "password": "$2a$12$pXUu.lh6ay2H2XVqly1wWue.PRSfxsNmkhdxLUV5fDcw5ORtx/q72",
-    "createdAt": "2026-11-13T11:47:31.640Z"
-  },
-  {
-    "_id": "usr_1794573108400",
-    "name": "Next Tester",
-    "email": "nexttest@example.com",
-    "password": "$2a$10$I/BAtUxHzxlXJZ6WiZlFS.uqiwYFCRmndvmPHFmj9WZGAcORh3GUS",
-    "createdAt": "2026-11-13T12:31:48.400Z"
-  },
-  {
     "_id": "usr_1794642146033",
     "name": "Gamal Ahmed",
     "email": "ga138989@gmail.com",

@@ -15,7 +15,6 @@ export function CartProvider({ children }) {
 
   // Initialize from localStorage
   useEffect(() => {
-    setIsClient(true);
     try {
       const stored = localStorage.getItem('product');
       if (stored) {
@@ -24,15 +23,17 @@ export function CartProvider({ children }) {
     } catch (e) {
       setCart([]);
     }
+    setIsClient(true);
   }, []);
 
-  // Save to localStorage when cart changes
-  const saveCartToStorage = (newCart) => {
-    setCart(newCart);
-    try {
-      localStorage.setItem('product', JSON.stringify(newCart));
-    } catch (e) {}
-  };
+  // Save to localStorage when cart changes after client mount
+  useEffect(() => {
+    if (isClient) {
+      try {
+        localStorage.setItem('product', JSON.stringify(cart));
+      } catch (e) {}
+    }
+  }, [cart, isClient]);
 
   const showToast = (message, actionText = '', actionUrl = '') => {
     const id = Date.now() + Math.random();
@@ -86,12 +87,14 @@ export function CartProvider({ children }) {
 
     setCart((prevCart) => {
       const existingIndex = prevCart.findIndex((item) => item.title === book.title);
-      let updated;
       if (existingIndex > -1) {
-        updated = [...prevCart];
-        updated[existingIndex].quantity = (Number(updated[existingIndex].quantity) || 1) + numQty;
+        return prevCart.map((item, idx) =>
+          idx === existingIndex
+            ? { ...item, quantity: (Number(item.quantity) || 1) + numQty }
+            : item
+        );
       } else {
-        updated = [
+        return [
           ...prevCart,
           {
             image: book.image,
@@ -102,37 +105,31 @@ export function CartProvider({ children }) {
           }
         ];
       }
-      try {
-        localStorage.setItem('product', JSON.stringify(updated));
-      } catch (e) {}
-      return updated;
     });
 
     showToast(`Added <b>${book.title}</b> to your cart!`, 'View Cart', '/shop');
   };
 
   const removeFromCart = (title) => {
-    const updated = cart.filter((item) => item.title !== title);
-    saveCartToStorage(updated);
+    setCart((prev) => prev.filter((item) => item.title !== title));
     showToast(`Removed <b>${title}</b> from cart.`);
   };
 
   const updateQuantity = (title, newQty) => {
-    if (newQty <= 0) {
+    const val = Number(newQty);
+    if (val <= 0) {
       removeFromCart(title);
       return;
     }
-    const updated = cart.map((item) => {
-      if (item.title === title) {
-        return { ...item, quantity: newQty };
-      }
-      return item;
-    });
-    saveCartToStorage(updated);
+    setCart((prev) =>
+      prev.map((item) =>
+        item.title === title ? { ...item, quantity: val } : item
+      )
+    );
   };
 
   const clearCart = () => {
-    saveCartToStorage([]);
+    setCart([]);
   };
 
   const applyPromoCode = (code) => {

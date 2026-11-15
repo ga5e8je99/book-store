@@ -23,7 +23,7 @@ const savePayments = (payments) => {
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
@@ -98,6 +98,76 @@ export async function PATCH(request) {
 
     return NextResponse.json(
       { status: 'success', message: 'Order status updated', data: { order: orders[index] } },
+      { headers: corsHeaders }
+    );
+  } catch (err) {
+    return NextResponse.json(
+      { status: 'error', message: err.message },
+      { status: 500, headers: corsHeaders }
+    );
+  }
+}
+
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    let id = searchParams.get('id');
+    let ids = searchParams.get('ids')?.split(',').filter(Boolean);
+    let action = searchParams.get('action');
+
+    const body = await request.json().catch(() => ({}));
+    if (body.id) id = body.id;
+    if (body.ids && Array.isArray(body.ids)) ids = body.ids;
+    if (body.action) action = body.action;
+
+    let orders = getPayments();
+
+    if (action === 'clear_tests') {
+      // Keep only orders with real orderId format (like ORD-777888) or created with items/cod
+      const beforeCount = orders.length;
+      orders = orders.filter((o) => o.orderId && o.items && o.items.length > 0);
+      savePayments(orders);
+      return NextResponse.json(
+        {
+          status: 'success',
+          message: `Cleared ${beforeCount - orders.length} test records.`,
+          data: { remaining: orders.length }
+        },
+        { headers: corsHeaders }
+      );
+    }
+
+    if (!id && (!ids || ids.length === 0)) {
+      return NextResponse.json(
+        { status: 'fail', message: 'Order ID or IDs are required for deletion' },
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    const initialLen = orders.length;
+
+    if (ids && ids.length > 0) {
+      orders = orders.filter((o) => !ids.includes(o._id) && !ids.includes(o.id) && !ids.includes(o.orderId));
+      savePayments(orders);
+      return NextResponse.json(
+        { status: 'success', message: `Deleted ${initialLen - orders.length} orders successfully` },
+        { headers: corsHeaders }
+      );
+    }
+
+    orders = orders.filter((o) => o._id !== id && o.id !== id && o.orderId !== id);
+
+    if (orders.length === initialLen) {
+      return NextResponse.json(
+        { status: 'fail', message: 'Order not found' },
+        { status: 404, headers: corsHeaders }
+      );
+    }
+
+    savePayments(orders);
+
+    return NextResponse.json(
+      { status: 'success', message: 'Order deleted successfully' },
       { headers: corsHeaders }
     );
   } catch (err) {

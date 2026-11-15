@@ -29,7 +29,7 @@ export default function HomePage() {
       <FeaturesBanner />
 
       {/* Section 1: Handpicked For You */}
-      <section className="section-wrapper">
+      <section className="section-wrapper" data-aos="fade-up">
         <div className="section-header">
           <h2 className="section-title">
             <div className="section-title-icon"><i className="fas fa-sparkles"></i></div>
@@ -47,7 +47,7 @@ export default function HomePage() {
       </section>
 
       {/* Section 2: Trending Best Sellers */}
-      <section className="section-wrapper">
+      <section className="section-wrapper" data-aos="fade-up">
         <div className="section-header">
           <h2 className="section-title">
             <div className="section-title-icon" style={{ background: '#fef3c7', color: '#d97706' }}>
@@ -67,7 +67,7 @@ export default function HomePage() {
       </section>
 
       {/* Section 3: Novels & Fiction */}
-      <section className="section-wrapper">
+      <section className="section-wrapper" data-aos="fade-up">
         <div className="section-header">
           <h2 className="section-title">
             <div className="section-title-icon" style={{ background: '#ffe4e6', color: '#e11d48' }}>
@@ -87,7 +87,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter Subscription Card */}
-      <section className="subscription-card">
+      <section className="subscription-card" data-aos="zoom-in" data-aos-duration="600">
         <h2>Join Our Global Readers Club</h2>
         <p>
           Subscribe to our weekly dispatch for handpicked recommendations, author interviews, and an immediate 20% discount on your first checkout.

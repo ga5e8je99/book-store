@@ -25,10 +25,16 @@ export default function FeaturesBanner() {
   ];
 
   return (
-    <section className="features-banner">
+    <section className="features-banner" data-aos="fade-up">
       <div className="features-grid">
         {features.map((feat, i) => (
-          <div key={i} className="feature-box">
+          <div
+            key={i}
+            className="feature-box"
+            data-aos="fade-up"
+            data-aos-delay={i * 100}
+            data-aos-duration="600"
+          >
             <div className="feature-icon-circle">
               <i className={`fas ${feat.icon}`}></i>
             </div>

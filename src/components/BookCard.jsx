@@ -12,7 +12,12 @@ export default function BookCard({ book }) {
   };
 
   return (
-    <div className="book-card-item" onClick={() => openModal(book)}>
+    <div
+      className="book-card-item"
+      onClick={() => openModal(book)}
+      data-aos="fade-up"
+      data-aos-duration="550"
+    >
       <div className="book-card-cover-wrapper">
         {book.badge && (
           <span className={`book-card-badge ${book.badge.includes('Best') ? 'bestseller' : ''}`}>

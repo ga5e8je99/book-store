@@ -69,7 +69,7 @@ export default function HeroSection() {
     <section className="hero-pro-section">
       <div className="hero-pro-grid">
         {/* Left Column: Compelling Editorial & CTAs */}
-        <div className="hero-pro-content">
+        <div className="hero-pro-content" data-aos="fade-right" data-aos-duration="700">
           {/* Top Live Announcement Pill */}
           <div className="hero-live-pill">
             <span className="hero-pulse-dot"></span>
@@ -145,6 +145,8 @@ export default function HeroSection() {
         {/* Right Column: Interactive 3D Book Spotlight Card */}
         <div
           className="hero-pro-showcase"
+          data-aos="fade-left"
+          data-aos-duration="700"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >

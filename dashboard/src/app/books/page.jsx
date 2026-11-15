@@ -27,6 +27,7 @@ export default function BooksManagerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -137,11 +138,48 @@ export default function BooksManagerPage() {
         if (res.ok) {
           showToast(`Deleted "${book.title}" from catalog.`);
           setBooks((prev) => prev.filter((b) => b.id !== book.id));
+          setSelectedIds((prev) => prev.filter((id) => id !== book.id));
         } else {
           alert('Failed to delete book');
         }
       } catch (err) {
         alert('Network error');
+      }
+    }
+  };
+
+  const toggleSelectBook = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedIds(filteredBooks.map((b) => b.id));
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedIds.length === 0) return;
+    if (confirm(`Are you sure you want to permanently delete ${selectedIds.length} selected books from the catalog?`)) {
+      try {
+        const res = await fetch('http://localhost:3000/api/books', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ids: selectedIds })
+        });
+        if (res.ok) {
+          showToast(`Deleted ${selectedIds.length} books successfully!`);
+          setBooks((prev) => prev.filter((b) => !selectedIds.includes(b.id)));
+          setSelectedIds([]);
+        } else {
+          alert('Failed to delete selected books');
+        }
+      } catch (e) {
+        alert('Network error while deleting books');
       }
     }
   };
@@ -215,42 +253,121 @@ export default function BooksManagerPage() {
             <i className="fas fa-spinner fa-spin fa-2x"></i>
           </div>
         ) : (
-          <div className="data-table-wrapper">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Book</th>
-                  <th>Category</th>
-                  <th>Price</th>
-                  <th>Stock</th>
-                  <th>Badge</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredBooks.map((book) => (
-                  <tr key={book.id}>
-                    <td>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <img
-                          src={book.image}
-                          alt={book.title}
-                          style={{
-                            width: '38px',
-                            height: '52px',
-                            objectFit: 'cover',
-                            borderRadius: '4px',
-                            background: '#1e293b'
-                          }}
-                        />
-                        <div>
-                          <div style={{ fontWeight: 700, color: '#ffffff' }}>{book.title}</div>
-                          <div style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
-                            {book.author || 'Author'}
+          <div>
+            {selectedIds.length > 0 && (
+              <div style={{
+                background: '#1e293b',
+                border: '1px solid #4f46e5',
+                padding: '10px 16px',
+                borderRadius: '8px',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '12px'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#e2e8f0', fontSize: '0.9rem', fontWeight: 600 }}>
+                  <i className="fas fa-check-square" style={{ color: '#818cf8' }}></i>
+                  <span>{selectedIds.length} book{selectedIds.length > 1 ? 's' : ''} selected</span>
+                </div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button
+                    type="button"
+                    onClick={handleDeleteSelected}
+                    style={{
+                      background: '#dc2626',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '7px 14px',
+                      borderRadius: '6px',
+                      fontWeight: 700,
+                      fontSize: '0.85rem',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    <i className="fas fa-trash-alt"></i> Delete Selected ({selectedIds.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedIds([])}
+                    style={{
+                      background: 'transparent',
+                      color: '#94a3b8',
+                      border: '1px solid #475569',
+                      padding: '7px 12px',
+                      borderRadius: '6px',
+                      fontSize: '0.85rem',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Clear Selection
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="data-table-wrapper">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th style={{ width: '40px', textAlign: 'center' }}>
+                      <input
+                        type="checkbox"
+                        checked={filteredBooks.length > 0 && selectedIds.length === filteredBooks.length}
+                        onChange={handleSelectAll}
+                        style={{ cursor: 'pointer', width: '16px', height: '16px', accentColor: '#4f46e5' }}
+                        title="Select All"
+                      />
+                    </th>
+                    <th>Book</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Badge</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredBooks.map((book) => {
+                    const isSelected = selectedIds.includes(book.id);
+                    return (
+                      <tr
+                        key={book.id}
+                        style={{ background: isSelected ? 'rgba(79, 70, 229, 0.12)' : 'transparent' }}
+                      >
+                        <td style={{ textAlign: 'center' }}>
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleSelectBook(book.id)}
+                            style={{ cursor: 'pointer', width: '16px', height: '16px', accentColor: '#4f46e5' }}
+                          />
+                        </td>
+                        <td>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <img
+                              src={book.image}
+                              alt={book.title}
+                              style={{
+                                width: '38px',
+                                height: '52px',
+                                objectFit: 'cover',
+                                borderRadius: '4px',
+                                background: '#1e293b'
+                              }}
+                            />
+                            <div>
+                              <div style={{ fontWeight: 700, color: '#ffffff' }}>{book.title}</div>
+                              <div style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
+                                {book.author || 'Author'}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </td>
+                        </td>
                     <td>
                       <span className="badge-status badge-indigo">
                         {book.category}
@@ -290,12 +407,14 @@ export default function BooksManagerPage() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                    );
+                  })}
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+    </div>
 
       {/* Add / Edit Modal */}
       {isModalOpen && (
