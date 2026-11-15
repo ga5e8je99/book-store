@@ -1,10 +1,26 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 const usersFilePath = path.join(process.cwd(), 'data', 'users.json');
+
+const createToken = (payload) => {
+  const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
+  const body = Buffer.from(
+    JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 3 * 24 * 60 * 60 })
+  ).toString('base64url');
+  const secret = process.env.JWT_SECRET || 'jwt-high-security-key';
+  const signature = crypto
+    .createHmac('sha256', secret)
+    .update(`${header}.${body}`)
+    .digest('base64url');
+  return `${header}.${body}.${signature}`;
+};
 
 const getLocalUsers = () => {
   try {
@@ -60,11 +76,7 @@ export async function POST(request) {
     users.push(newUser);
     saveLocalUsers(users);
 
-    const token = jwt.sign(
-      { id: newUser._id },
-      process.env.JWT_SECRET || 'jwt-high-security-key',
-      { expiresIn: '3d' }
-    );
+    const token = createToken({ id: newUser._id });
 
     const safeUser = { ...newUser };
     delete safeUser.password;
